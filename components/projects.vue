@@ -1,77 +1,49 @@
 <template>
-  <v-container
-    fluid
-    class="pl-10 pt-0"
-    style="
-      margin-top: 170px;
-      background-image: url('images/background/bg-astrisk-icon.svg');
-    "
-  >
+  <v-container fluid class="pl-10 pt-0" style="margin-top: 170px">
     <v-row class="align-center">
       <v-col cols="3" class="d-flex align-center gap-section">
-        <span class="number-circle">01</span>
+        <span class="number-circle">02</span>
         <span class="middle-divider"></span>
         <v-chip
           class="pa-4 font-weight-medium"
           style="font-size: 15px; color: white; background-color: black"
         >
-          Stats & facts
+          Portfolio
         </v-chip>
       </v-col>
 
       <v-col cols="9" class="pl-16">
         <div class="text-content">
           <h1 style="font-size: 54px; color: #1f2a2e; max-width: 700px">
-            High quality web design solutions you can trust.
+            Featured projects
           </h1>
           <p
             class="font-weight-medium mt-3"
             style="font-size: 20px; color: #858c8f; max-width: 620px"
           >
-            When selecting a web design agency, it's essential to consider its
-            reputation, experience, and the specific needs of your project.
+            A glimpse into our creativity—exploring innovative designs,
+            successful collaborations, and transformative digital experiences.
           </p>
         </div>
       </v-col>
     </v-row>
+
+    <!-- Carousel -->
     <v-row>
-      <v-col cols="9" offset="3">
-        <v-row class="mt-14">
-          <v-col cols="4" v-for="card in cards" :key="card.id">
-            <v-card
-              variant="none"
-              style="border-top: 1px solid rgb(202, 200, 200)"
-            >
-              <v-card-title style="font-size: 65px; font-weight: 700">
-                {{ card.title }}
-              </v-card-title>
-              <v-card-text
-                class="font-weight-light"
-                style="font-size: 18px; color: #75797b"
-              >
-                {{ card.text }}
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-col>
-      <v-col cols="9" offset="3">
-        <div elevation="0" class="btn">
-          <span class="btn-text">Who We Are</span>
-          <v-img
-            class="img"
-            src="/images/svgs/arrow-icon.svg"
-            width="60"
-            height="60"
-          ></v-img>
-        </div>
-      </v-col>
+      <UCarousel
+        :items="items"
+        dots
+        :ui="{ item: 'basis-1/3' }"
+        v-slot:default="{ item }"
+      >
+        <img :src="item" width="320" height="320" class="rounded-lg" />
+      </UCarousel>
     </v-row>
   </v-container>
 </template>
 
 <script setup>
-import { ref, onBeforeUnmount, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 
 const value1 = ref(0);
 const value2 = ref(0);
@@ -139,6 +111,15 @@ const cards = ref([
     text: "Support through messages and live consultations",
   },
 ]);
+
+const items = [
+  "https://picsum.photos/640/640?random=1",
+  "https://picsum.photos/640/640?random=2",
+  "https://picsum.photos/640/640?random=3",
+  "https://picsum.photos/640/640?random=4",
+  "https://picsum.photos/640/640?random=5",
+  "https://picsum.photos/640/640?random=6",
+];
 </script>
 
 <style scoped>
@@ -156,30 +137,17 @@ const cards = ref([
 }
 
 .gap-section {
-  gap: 20px; /* مسافة بين العناصر */
-}
-
-.number-circle {
-  background: #c1ff72;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  color: #1f2a2e;
-  font-size: 18px;
+  gap: 20px;
 }
 
 .middle-divider {
   height: 2px;
   background: #d3d4d6;
-  width: 120px; /* طول الخط */
+  width: 120px;
   display: block;
 }
 
-/* الزر */
+/* Button styles (optional) */
 .btn {
   background-color: #c1ff72;
   text-transform: none;
