@@ -3,5 +3,6 @@
     <heroSection />
     <statsSection />
     <projects />
+    <services />
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid class="pl-10 pt-0" style="margin-top: 170px">
-    <v-row class="align-center">
+  <v-container fluid class="pa-0" style="margin-top: 170px">
+    <v-row class="align-center pl-10">
       <v-col cols="3" class="d-flex align-center gap-section">
         <span class="number-circle">02</span>
         <span class="middle-divider"></span>
@@ -29,96 +29,124 @@
     </v-row>
 
     <!-- Carousel -->
-    <v-row>
-      <UCarousel
-        :items="items"
-        dots
-        :ui="{ item: 'basis-1/3' }"
-        v-slot:default="{ item }"
-      >
-        <img :src="item" width="320" height="320" class="rounded-lg" />
-      </UCarousel>
+    <v-row class="pt-16">
+      <v-col cols="12" class="px-0">
+        <v-slide-group class="project-slider" :show-arrows="false" loop>
+          <v-slide-group-item v-for="(item, index) in items" :key="index">
+            <div class="slide">
+              <v-card elevation="0">
+                <div class="image-wrapper position-relative">
+                  <img
+                    :src="item.image"
+                    style="height: 370px; width: 100%; object-fit: cover"
+                  />
+                  <div class="overlay">
+                    <button class="action-btn">
+                      <v-icon icon="mdi-arrow-top-right"></v-icon>
+                    </button>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <h3 class="text-h4 font-weight-bold mb-2">
+                    {{ item.title }}
+                  </h3>
+                  <div class="d-flex flex-wrap" style="gap: 12px">
+                    <v-chip
+                      v-for="tag in item.tags"
+                      :key="tag"
+                      size="small"
+                      variant="outlined"
+                      class="font-weight-bold mt-3 pa-4"
+                      style="
+                        font-size: 14px;
+                        border: #e0e0e0 solid 1px;
+                        color: #1f2a2e;
+                      "
+                    >
+                      {{ tag }}
+                    </v-chip>
+                  </div>
+                </div>
+              </v-card>
+            </div>
+          </v-slide-group-item>
+        </v-slide-group>
+      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
-
-const value1 = ref(0);
-const value2 = ref(0);
-const value3 = ref(0);
-
-let interval1 = -1;
-let interval2 = -1;
-let interval3 = -1;
+import { ref, onMounted } from "vue";
+const active = ref(1);
 
 onMounted(() => {
-  interval1 = setInterval(() => {
-    if (value1.value >= 40) {
-      value1.value = 40;
-      clearInterval(interval1);
-      return;
-    }
-    value1.value += 1;
-  }, 40);
+  const slider = document.querySelector(
+    ".project-slider .v-slide-group__content"
+  );
+  if (!slider) return;
 
-  interval2 = setInterval(() => {
-    if (value2.value >= 238) {
-      value2.value = 238;
-      clearInterval(interval2);
-      return;
-    }
-    value2.value += 4;
-  }, 25);
+  let isDown = false;
+  let startX;
+  let scrollLeft;
 
-  interval3 = setInterval(() => {
-    if (value3.value >= 3) {
-      value3.value = 3;
-      clearInterval(interval3);
-      return;
-    }
-    value3.value += 0.5;
-  }, 50);
+  slider.addEventListener("mousedown", (e) => {
+    isDown = true;
+    slider.style.cursor = "grabbing";
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+
+  slider.addEventListener("mouseleave", () => {
+    isDown = false;
+    slider.style.cursor = "grab";
+  });
+
+  slider.addEventListener("mouseup", () => {
+    isDown = false;
+    slider.style.cursor = "grab";
+  });
+
+  slider.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 2; // scroll-fast
+    slider.scrollLeft = scrollLeft - walk;
+  });
 });
-
-onBeforeUnmount(() => {
-  clearInterval(interval1);
-  clearInterval(interval2);
-  clearInterval(interval3);
-});
-
-const cards = ref([
-  {
-    id: 1,
-    get title() {
-      return `${Math.floor(value1.value)}K+`;
-    },
-    text: "People who have launched their websites",
-  },
-  {
-    id: 2,
-    get title() {
-      return `${Math.floor(value2.value)}+`;
-    },
-    text: "Experienced professionals ready to assist",
-  },
-  {
-    id: 3,
-    get title() {
-      return `${value3.value}M+`;
-    },
-    text: "Support through messages and live consultations",
-  },
-]);
 
 const items = [
-  "https://picsum.photos/640/640?random=1",
-  "https://picsum.photos/640/640?random=2",
-  "https://picsum.photos/640/640?random=3",
-  "https://picsum.photos/640/640?random=4",
-  "https://picsum.photos/640/640?random=5",
-  "https://picsum.photos/640/640?random=6",
+  {
+    image: "/images/projects/project1.webp",
+    title: "Pixelgorge",
+    tags: ["UI/UX Design", "Web Development"],
+  },
+  {
+    image: "/images/projects/project2.webp",
+    title: "Transfermax",
+    tags: ["Web Development", "Digital Design"],
+  },
+  {
+    image: "/images/projects/project3.webp",
+    title: "Digital Magazine",
+    tags: ["Digital Design", "Web Development"],
+  },
+  {
+    image: "/images/projects/project4.webp",
+    title: "Amber Bottle",
+    tags: ["Photography", "Studio"],
+  },
+  {
+    image: "/images/projects/project5.webp",
+    title: "BioTrack Lims",
+    tags: ["Brand Identity", "Digital Design"],
+  },
+  {
+    image: "/images/projects/snapclear.webp",
+    title: "SnapClear",
+    tags: ["UX Strategy", "UI Design"],
+  },
 ];
 </script>
 
@@ -147,51 +175,64 @@ const items = [
   display: block;
 }
 
-/* Button styles (optional) */
-.btn {
-  background-color: #c1ff72;
-  text-transform: none;
-  margin-top: 40px;
-  margin-left: 15px;
-  font-weight: 700;
-  font-size: 20px;
-  letter-spacing: 1px;
-  height: 65px;
-  width: 230px;
-  padding: 2px 20px;
+/* carousel */
+.project-slider {
+  margin-top: 50px;
+  cursor: grab;
+}
+
+.project-slider:active {
+  cursor: grabbing;
+}
+
+/* مهم: يسمح بالسحب */
+.project-slider .v-slide-group__content {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+/* slide = 3 في الشاشة */
+.slide {
+  position: relative;
+  flex: 0 0 25%;
+  padding: 0 12px;
+  height: auto;
+  box-sizing: border-box;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* overlay (على أي صورة) */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 0, 0, 0.35);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-radius: 40px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  overflow: hidden;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.btn:hover {
-  background-color: #000000de;
-  color: white;
+.slide:hover .overlay {
+  opacity: 1;
 }
 
-.btn-text,
-.btn .img {
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-}
-
-.btn .btn-text {
-  transform: translateX(10px);
-}
-
-.btn .img {
-  transform: translateX(15px);
-}
-
-.btn:hover .btn-text {
-  transform: translateX(55px);
-}
-
-.btn:hover .img {
-  transform: translateX(-140px);
-  content: url("/images/svgs/arrow.png");
+/* زر */
+.action-btn {
+  width: 56px;
+  height: 56px;
+  background: #c1ff72;
+  color: #000;
+  border-radius: 50%;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
