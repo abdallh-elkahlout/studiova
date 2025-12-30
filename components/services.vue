@@ -83,17 +83,16 @@
           </v-row>
         </div>
         <v-col cols="12" offset="4">
-           <div elevation="0" class="btn">
-          <span class="btn-text">See Our Work</span>
-          <v-img
-            class="img"
-            src="/images/svgs/arrow-icon.svg"
-            width="60"
-            height="60"
-          ></v-img>
-        </div>
-        </v-col> 
-        
+          <div elevation="0" class="btn">
+            <span class="btn-text">See Our Work</span>
+            <v-img
+              class="img"
+              src="/images/svgs/arrow-icon.svg"
+              width="60"
+              height="60"
+            ></v-img>
+          </div>
+        </v-col>
       </v-col>
     </v-row>
   </v-container>

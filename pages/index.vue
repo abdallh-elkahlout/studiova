@@ -4,5 +4,6 @@
     <statsSection />
     <projects />
     <services />
+    <aboutUs />
   </div>
 </template>
