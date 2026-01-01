@@ -34,9 +34,9 @@
           class="cardOne"
           elevation="0"
           ><v-rating
-            style="margin-left: 10px"
-            hover
+            style="margin-left: 10px;"
             :length="5"
+            readonly
             :size="32"
             :model-value="3"
             active-color="black"

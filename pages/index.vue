@@ -5,5 +5,6 @@
     <projects />
     <services />
     <aboutUs />
+    <testimonial />
   </div>
 </template>
