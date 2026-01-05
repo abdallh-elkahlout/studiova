@@ -1,7 +1,7 @@
 <template>
   <v-container
     fluid
-    style="padding-top: 150px; margin-top: 170px; background-color: #f4f8fa"
+    style="padding-top: 150px; margin-top: 170px; background-color: #f4f8fa; padding-bottom: 150px;"
   >
     <v-row class="align-center pl-10">
       <v-col cols="12" sm="3" class="d-flex align-center gap-section">

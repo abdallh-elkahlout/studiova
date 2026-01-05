@@ -1,10 +1,12 @@
 <template>
   <div>
-    <heroSection />
-    <statsSection />
-    <projects />
-    <services />
-    <aboutUs />
-    <testimonial />
+    <HomePageHeroSection />
+    <HomePageStatsSection />
+    <HomePageProjects />
+    <HomePageServices />
+    <HomePageAboutUs />
+    <HomePageTestimonial />
+    <HomePageTeam />
+    <HomePagePricing />
   </div>
 </template>
