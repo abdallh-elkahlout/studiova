@@ -8,5 +8,6 @@
     <HomePageTestimonial />
     <HomePageTeam />
     <HomePagePricing />
+    <HomePageQuestions />
   </div>
 </template>
